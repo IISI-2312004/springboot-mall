@@ -7,13 +7,17 @@ import com.mandy.springbootmall.dto.ProductUpdateDto;
 import com.mandy.springbootmall.model.Product;
 import com.mandy.springbootmall.service.ProductService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Validated
 @RestController
 public class ProductController {
     @Autowired
@@ -22,14 +26,19 @@ public class ProductController {
         public ResponseEntity<List<Product>> getProducts(
                 @RequestParam(required = false) ProductCategory category,
                 @RequestParam(required = false) String search,
-                @RequestParam(required = false,defaultValue = "create_date") String orderBy,
-                @RequestParam(required = false, defaultValue = "desc") String sort
+                @RequestParam(defaultValue = "created_date") String orderBy,
+                @RequestParam(defaultValue = "desc") String sort,
+                @RequestParam(defaultValue = "5") @Max(1000) @Min(0) Integer limit,
+                @RequestParam(defaultValue = "0") @Min(0) Integer offset
     ){
         ProductQueryParam productQueryParam = new ProductQueryParam();
         productQueryParam.setCategory(category);
         productQueryParam.setSearch(search);
         productQueryParam.setSort(sort);
         productQueryParam.setOrderBy(orderBy);
+        productQueryParam.setLimit(limit);
+        productQueryParam.setOffset(offset);
+
         List<Product> productList = productService.getProducts(productQueryParam);
 
         return ResponseEntity.status(HttpStatus.OK).body(productList);
