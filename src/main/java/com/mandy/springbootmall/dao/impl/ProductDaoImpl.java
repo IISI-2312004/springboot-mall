@@ -2,6 +2,7 @@ package com.mandy.springbootmall.dao.impl;
 
 import com.mandy.springbootmall.dao.ProductDao;
 import com.mandy.springbootmall.dto.ProductRequest;
+import com.mandy.springbootmall.dto.ProductUpdateDto;
 import com.mandy.springbootmall.model.Product;
 import com.mandy.springbootmall.rowmapper.ProductRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +72,35 @@ public class ProductDaoImpl implements ProductDao {
         int productId = keyHolder.getKey().intValue();
 
         return  productId;
+
+    }
+    public Integer updateProduct(ProductUpdateDto productUpdateDto){
+        String sql = "UPDATE product" +
+                " SET" +
+                " product_name = :productName," +
+                " category = :category," +
+                " image_url = :imageUrl," +
+                " price = :price," +
+                " stock = :stock," +
+                " description = :description," +
+                " last_modified_date = :lastModifiedDate" +
+                " WHERE product_id = :productId";
+
+        Map<String, Object> map =  new HashMap();
+        map.put("productId",productUpdateDto.getProductId());
+        map.put("productName",productUpdateDto.getProductName());
+        map.put("category",productUpdateDto.getCategory().name());
+        map.put("imageUrl",productUpdateDto.getImageUrl());
+        map.put("price",productUpdateDto.getPrice());
+        map.put("stock",productUpdateDto.getStock());
+        map.put("description",productUpdateDto.getDescription());
+        Date now = new Date();
+        map.put("lastModifiedDate",now);
+
+
+        int productId = productUpdateDto.getProductId();
+
+        return productId;
 
     }
 }

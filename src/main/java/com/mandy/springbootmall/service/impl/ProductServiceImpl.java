@@ -2,6 +2,7 @@ package com.mandy.springbootmall.service.impl;
 
 import com.mandy.springbootmall.dao.ProductDao;
 import com.mandy.springbootmall.dto.ProductRequest;
+import com.mandy.springbootmall.dto.ProductUpdateDto;
 import com.mandy.springbootmall.model.Product;
 import com.mandy.springbootmall.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,5 +21,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Integer createProduct(ProductRequest productRequest) {
         return productDao.createProduct(productRequest);
+    }
+    public Integer updateProduct(ProductUpdateDto productUpdateDto) {
+        return productDao.updateProduct(productUpdateDto);
     }
 }
