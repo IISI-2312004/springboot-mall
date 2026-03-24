@@ -1,6 +1,7 @@
 package com.mandy.springbootmall.service.impl;
 
 import com.mandy.springbootmall.dao.ProductDao;
+import com.mandy.springbootmall.dto.ProductQueryParam;
 import com.mandy.springbootmall.dto.ProductRequest;
 import com.mandy.springbootmall.dto.ProductUpdateDto;
 import com.mandy.springbootmall.model.Product;
@@ -30,7 +31,7 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProduct(Integer productId) {
         productDao.deleteProduct(productId);
     }
-    public List<Product> getProducts() {
-       return productDao.getProducts();
+    public List<Product> getProducts(ProductQueryParam productQueryParam) {
+       return productDao.getProducts(productQueryParam);
     }
 }

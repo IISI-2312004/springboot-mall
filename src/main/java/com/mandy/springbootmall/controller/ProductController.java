@@ -1,5 +1,7 @@
 package com.mandy.springbootmall.controller;
 
+import com.mandy.springbootmall.constant.ProductCategory;
+import com.mandy.springbootmall.dto.ProductQueryParam;
 import com.mandy.springbootmall.dto.ProductRequest;
 import com.mandy.springbootmall.dto.ProductUpdateDto;
 import com.mandy.springbootmall.model.Product;
@@ -17,9 +19,14 @@ public class ProductController {
     @Autowired
     private ProductService productService;
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getProducts(){
-
-        List<Product> productList = productService.getProducts();
+        public ResponseEntity<List<Product>> getProducts(
+                @RequestParam(required = false) ProductCategory category,
+                @RequestParam(required = false) String search
+    ){
+        ProductQueryParam productQueryParam = new ProductQueryParam();
+        productQueryParam.setCategory(category);
+        productQueryParam.setSearch(search);
+        List<Product> productList = productService.getProducts(productQueryParam);
 
         return ResponseEntity.status(HttpStatus.OK).body(productList);
     }
