@@ -45,4 +45,15 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.OK).body(product);
         }
     }
+    @DeleteMapping("/products/{productId}")
+    public ResponseEntity<String> deleteroduct(@PathVariable Integer productId){
+        Product product =  productService.getProductById(productId);
+        if(productId == null || product ==null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        else{
+            productService.deleteProduct(productId);
+            return ResponseEntity.status(HttpStatus.OK).body("刪除成功");
+        }
+    }
 }
