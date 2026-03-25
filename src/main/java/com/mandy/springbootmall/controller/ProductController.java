@@ -6,6 +6,7 @@ import com.mandy.springbootmall.dto.ProductRequest;
 import com.mandy.springbootmall.dto.ProductUpdateDto;
 import com.mandy.springbootmall.model.Product;
 import com.mandy.springbootmall.service.ProductService;
+import com.mandy.springbootmall.utils.Page;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -23,7 +24,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
     @GetMapping("/products")
-        public ResponseEntity<List<Product>> getProducts(
+        public ResponseEntity<Page<Product>> getProducts(
                 @RequestParam(required = false) ProductCategory category,
                 @RequestParam(required = false) String search,
                 @RequestParam(defaultValue = "created_date") String orderBy,
@@ -41,7 +42,15 @@ public class ProductController {
 
         List<Product> productList = productService.getProducts(productQueryParam);
 
-        return ResponseEntity.status(HttpStatus.OK).body(productList);
+        Integer total = productService.countProduct(productQueryParam);
+
+        Page<Product> page = new Page<>();
+        page.setLimit(limit);
+        page.setOffset(offset);
+        page.setTotal(total);
+        page.setResults(productList);
+
+        return ResponseEntity.status(HttpStatus.OK).body(page);
     }
  @GetMapping("/products/{productId}")
     public ResponseEntity<Product> getProduct(@PathVariable Integer productId){
