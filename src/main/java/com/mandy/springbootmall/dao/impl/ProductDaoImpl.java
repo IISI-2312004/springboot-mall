@@ -76,7 +76,7 @@ public class ProductDaoImpl implements ProductDao {
         return  productId;
 
     }
-    public Integer updateProduct(ProductUpdateDto productUpdateDto){
+    public void updateProduct(ProductUpdateDto productUpdateDto){
         String sql = "UPDATE product" +
                 " SET" +
                 " product_name = :productName," +
@@ -99,10 +99,8 @@ public class ProductDaoImpl implements ProductDao {
         Date now = new Date();
         map.put("lastModifiedDate",now);
 
+        namedParameterJdbcTemplate.update(sql,new MapSqlParameterSource(map));
 
-        int productId = productUpdateDto.getProductId();
-
-        return productId;
 
     }
     public void deleteProduct(Integer productId){

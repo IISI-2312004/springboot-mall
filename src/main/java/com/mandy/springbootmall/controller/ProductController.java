@@ -68,7 +68,7 @@ public class ProductController {
     public ResponseEntity<Product> createProduct(@RequestBody @Valid ProductRequest productRequest){
         Integer productId =  productService.createProduct(productRequest);
         Product product =  productService.getProductById(productId);
-        return ResponseEntity.status(HttpStatus.OK).body(product);
+        return ResponseEntity.status(HttpStatus.CREATED).body(product);
     }
     @PutMapping("/products")
     public ResponseEntity<Product> updateProduct(@RequestBody @Valid ProductUpdateDto productUpdateDto){
@@ -80,18 +80,14 @@ public class ProductController {
         }
         else{
             productService.updateProduct(productUpdateDto);
-            return ResponseEntity.status(HttpStatus.OK).body(product);
+            Product updateProduct =  productService.getProductById(productId);
+            return ResponseEntity.status(HttpStatus.OK).body(updateProduct);
         }
     }
     @DeleteMapping("/products/{productId}")
     public ResponseEntity<String> deleteroduct(@PathVariable Integer productId){
-        Product product =  productService.getProductById(productId);
-        if(productId == null || product ==null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        else{
+
             productService.deleteProduct(productId);
-            return ResponseEntity.status(HttpStatus.OK).body("刪除成功");
-        }
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
