@@ -1,6 +1,7 @@
 package com.mandy.springbootmall.controller;
 
 import com.mandy.springbootmall.dto.CreateOrderRequest;
+import com.mandy.springbootmall.model.Order;
 import com.mandy.springbootmall.service.OrderService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,8 @@ public class OrderController {
     public ResponseEntity<?> createOrder(@PathVariable Integer userId,
                                          @RequestBody @Valid CreateOrderRequest createOrderRequest
     ) {
-        Integer orederId = orderService.createOrder(userId, createOrderRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(orederId);
+        Integer orderId = orderService.createOrder(userId, createOrderRequest);
+        Order order = orderService.getOrderById(orderId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(order);
     }
 }

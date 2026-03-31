@@ -2,10 +2,12 @@ package com.mandy.springbootmall.model;
 
 public class OrderItem {
     private Integer orderItemId;
-    private Integer OrderId;
-    private Integer ProductId;
+    private Integer orderId;
+    private Integer productId;
     private Integer quantity;
     private Integer amount;
+    private String productName;
+    private String imageUrl;
 
     public Integer getOrderItemId() {
         return orderItemId;
@@ -16,19 +18,19 @@ public class OrderItem {
     }
 
     public Integer getOrderId() {
-        return OrderId;
+        return orderId;
     }
 
     public void setOrderId(Integer orderId) {
-        OrderId = orderId;
+        this.orderId = orderId;
     }
 
     public Integer getProductId() {
-        return ProductId;
+        return productId;
     }
 
     public void setProductId(Integer productId) {
-        ProductId = productId;
+        this.productId = productId;
     }
 
     public Integer getQuantity() {
@@ -45,5 +47,21 @@ public class OrderItem {
 
     public void setAmount(Integer amount) {
         this.amount = amount;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

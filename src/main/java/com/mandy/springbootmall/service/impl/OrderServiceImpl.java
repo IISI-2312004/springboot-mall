@@ -4,6 +4,7 @@ import com.mandy.springbootmall.dao.OrderDao;
 import com.mandy.springbootmall.dao.ProductDao;
 import com.mandy.springbootmall.dto.BuyItem;
 import com.mandy.springbootmall.dto.CreateOrderRequest;
+import com.mandy.springbootmall.model.Order;
 import com.mandy.springbootmall.model.OrderItem;
 import com.mandy.springbootmall.model.Product;
 import com.mandy.springbootmall.service.OrderService;
@@ -32,7 +33,7 @@ public class OrderServiceImpl implements OrderService {
             int amount = buyItem.getQuantity() * product.getPrice();
             totalAmount = totalAmount + amount;
 
-//            轉換BuyItem to OrderItem;=
+//            轉換BuyItem to OrderItem
             OrderItem orderItem = new OrderItem();
             orderItem.setProductId(buyItem.getProductId());
             orderItem.setQuantity(buyItem.getQuantity());
@@ -44,5 +45,13 @@ public class OrderServiceImpl implements OrderService {
         orderDao.createOrderItems(orderId, orderItemList);
 
         return orderId;
+    }
+
+
+    public Order getOrderById(Integer orderId) {
+        Order order = orderDao.getOrderById(orderId);
+        List<OrderItem> orderItemList = orderDao.getOrderItemsByOrderId(orderId);
+        order.setOrderItemList(orderItemList);
+        return order;
     }
 }

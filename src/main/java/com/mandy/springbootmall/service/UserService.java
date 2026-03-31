@@ -6,7 +6,11 @@ import com.mandy.springbootmall.model.User;
 
 public interface UserService {
     User getUserById(Integer userId);
+
     User getUserByEmail(String email);
+
     User login(UserLoginRequest userLoginRequest);
+
     Integer register(UserRegisterRequest userRegisterRequest);
+
 }
