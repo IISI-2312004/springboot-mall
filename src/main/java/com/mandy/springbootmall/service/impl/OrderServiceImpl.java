@@ -5,6 +5,7 @@ import com.mandy.springbootmall.dao.ProductDao;
 import com.mandy.springbootmall.dao.UserDao;
 import com.mandy.springbootmall.dto.BuyItem;
 import com.mandy.springbootmall.dto.CreateOrderRequest;
+import com.mandy.springbootmall.dto.OrderQueryParam;
 import com.mandy.springbootmall.model.Order;
 import com.mandy.springbootmall.model.OrderItem;
 import com.mandy.springbootmall.model.Product;
@@ -79,11 +80,23 @@ public class OrderServiceImpl implements OrderService {
         return orderId;
     }
 
-
     public Order getOrderById(Integer orderId) {
         Order order = orderDao.getOrderById(orderId);
         List<OrderItem> orderItemList = orderDao.getOrderItemsByOrderId(orderId);
         order.setOrderItemList(orderItemList);
         return order;
+    }
+
+    public List<Order> getOrders(OrderQueryParam orderQueryParam) {
+        List<Order> orderList = orderDao.getOrders(orderQueryParam);
+        for (Order order : orderList) {
+            List<OrderItem> orderItemList = orderDao.getOrderItemsByOrderId(order.getOrderId());
+            order.setOrderItemList(orderItemList);
+        }
+        return orderList;
+    }
+
+    public Integer countOrders(OrderQueryParam orderQueryParam) {
+        return orderDao.countOrders(orderQueryParam);
     }
 }
